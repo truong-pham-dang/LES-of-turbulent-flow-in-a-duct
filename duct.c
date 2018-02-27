@@ -1586,15 +1586,16 @@ void Output_VTK(void)
     coordy[jj] = (jj) * deltaY;
   }
 
-  sprintf(str, "%d", step);
+  sprintf(str, "%7d", step);
   char str2[20] = ".vtk";
   sprintf(str2,strcat(str,str2));
+  char str3[20] = "slice_";
+  sprintf(str2,strcat(str3,str2));
   if ((pF = fopen(str2, "w")) == NULL) {
     printf("Cannot open file \"%s\" ", str2);
     exit(-1);
   }
 
-  //  fprintf(pF, "%d\n%d\n%f\n%f\n", LEN, HIG, deltaX, deltaY);
   fprintf(pF,"# vtk DataFile Version 2.0 \n");
   fprintf(pF,"LES slice \n");
   fprintf(pF,"ASCII \n");
@@ -1720,19 +1721,13 @@ int main()
     /*--- Taking frame ---*/
     if (step % f_step == 0)
     {
-        //Output();
         Output_VTK();
     }
 
 
-    /*--- Debug ---*/
-    /*if (step == 1)
-        Output_VTK();*/
-
   } /* end while */
 
   /*--- Output of the flowfield ---*/
-  //Output();
   Output_VTK();
 
   /*--- Backup solution ---*/
